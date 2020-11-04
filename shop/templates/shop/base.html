@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      {% block title %}
+      Dubai Shop | Grocery Store
+      {% endblock %}
+    </title>
+    <!-- SEO Meta Tags-->
+    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
+    <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap 4, html5, css3, jquery, js, gallery, slider, touch, creative, clean">
+    <meta name="author" content="Createx Studio">
+    <!-- Viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon and Touch Icons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'site.webmanifest' %}">
+    <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
+    <link rel="stylesheet" media="screen" href="{% static 'vendor/simplebar/dist/simplebar.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'vendor/tiny-slider/dist/tiny-slider.css' %}"/>
+    <!-- Main Theme Styles + Bootstrap-->
+    <link rel="stylesheet" media="screen" href="{% static 'css/theme.min.css' %}">
+
+    <script type="text/javascript">
+      var user = '{{request.user}}'
+
+      function getToken(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+      }
+      const csrftoken = getToken('csrftoken');
+    </script>
+  </head>
+  <!-- Body-->
+  <body class="bg-secondary">
+    <!-- Navbar-->
+    <header class="bg-light box-shadow-sm fixed-top">
+      <div class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid"><a class="navbar-brand d-none d-sm-block mr-3 mr-xl-4 flex-shrink-0" href="{% url 'shop:index' %}" style="min-width: 7rem;"><img width="142" src="{% static 'img/logo-dark.png' %}" alt="Sklep Dubai"/></a><a class="navbar-brand d-sm-none mr-2" href="#" style="min-width: 4.625rem;"><img width="74" src="{% static 'img/logo-dark.png' %}" alt="Sklep Dubai"/></a>
+          <!-- Toolbar-->
+          {% block cart %}
+          <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center ml-xl-2"><a class="navbar-toggler" href="#sideNav" data-toggle="sidebar"><span class="navbar-toggler-icon"></span></a><a class="navbar-tool d-flex d-lg-none" href="#searchBox" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="searchBox">
+          <div class="navbar-tool dropdown ml-3"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="grocery-checkout.html"><span class="navbar-tool-label">3</span><i class="navbar-tool-icon czi-cart"></i></a><a class="navbar-tool-text" href="grocery-checkout.html"><small>My Cart</small>$25.00</a>
+            <div class="dropdown-menu dropdown-menu-right" style="width: 20rem;">
+              <div class="widget widget-cart px-3 pt-2 pb-3">
+                <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
+                  <div class="widget-cart-item pb-2 border-bottom">
+                    <button class="close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
+                    <div class="media align-items-center"><a class="d-block mr-2" href="grocery-single.html"><img width="64" src="img/grocery/cart/th01.jpg" alt="Product"/></a>
+                      <div class="media-body">
+                        <h6 class="widget-product-title"><a href="grocery-single.html">Frozen Oven-ready Poultry</a></h6>
+                        <div class="widget-product-meta"><span class="text-accent mr-2">$15.<small>00</small></span><span class="text-muted">x 1</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="widget-cart-item py-2 border-bottom">
+                    <button class="close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
+                    <div class="media align-items-center"><a class="d-block mr-2" href="grocery-single.html"><img width="64" src="img/grocery/cart/th02.jpg" alt="Product"/></a>
+                      <div class="media-body">
+                        <h6 class="widget-product-title"><a href="grocery-single.html">Nut Chocolate Paste (750g)</a></h6>
+                        <div class="widget-product-meta"><span class="text-accent mr-2">$6.<small>50</small></span><span class="text-muted">x 1</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="widget-cart-item py-2 border-bottom">
+                    <button class="close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
+                    <div class="media align-items-center"><a class="d-block mr-2" href="grocery-single.html"><img width="64" src="img/grocery/cart/th03.jpg" alt="Product"/></a>
+                      <div class="media-body">
+                        <h6 class="widget-product-title"><a href="grocery-single.html">Mozzarella Mini Cheese</a></h6>
+                        <div class="widget-product-meta"><span class="text-accent mr-2">$3.<small>50</small></span><span class="text-muted">x 1</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex flex-wrap justify-content-between align-items-center pt-3">
+                  <div class="font-size-sm mr-2 py-2"><span class="text-muted">Total:</span><span class="text-accent font-size-base ml-1">$25.<small>00</small></span></div><a class="btn btn-primary btn-sm" href="grocery-checkout.html"><i class="czi-card mr-2 font-size-base align-middle"></i>Checkout<i class="czi-arrow-right ml-1 mr-n1"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          </div>
+          {% endblock %}
+        </div>
+      </div>
+
+    </header>
+    <!-- Sidebar menu-->
+    <aside class="cz-sidebar cz-sidebar-fixed" id="sideNav" style="padding-top: 5rem;">
+      <button class="close" type="button" data-dismiss="sidebar" aria-label="Close"><span class="d-inline-block font-size-xs font-weight-normal align-middle">Close sidebar</span><span class="d-inline-block align-middle ml-2" aria-hidden="false">&times;</span></button>
+      <div class="cz-sidebar-inner">
+        <ul class="nav nav-tabs nav-justified mt-2 mt-lg-4 mb-0" role="tablist" style="min-height: 3rem;">
+          <li class="nav-item"><a class="nav-link font-weight-medium active" href="#categories" data-toggle="tab" role="tab">Categories</a></li>
+          <li class="nav-item"><a class="nav-link font-weight-medium" href="#menu" data-toggle="tab" role="tab">Menu</a></li>
+        </ul>
+        <div class="cz-sidebar-body pt-3 pb-0" data-simplebar>
+          <div class="tab-content">
+            <!-- Categories-->
+            <div class="sidebar-nav tab-pane fade show active" id="categories" role="tabpanel">
+              <div class="widget widget-categories">
+                <div class="accordion" id="shop-categories">
+                  <!-- Special offers-->
+                  <div class="card border-bottom">
+                    <div class="card-header">
+                      <h3 class="accordion-heading font-size-base px-grid-gutter"><a class="collapsed py-3" href="{% url 'shop:product_list' %}"><span class="d-flex align-items-center"><i class="czi-discount font-size-lg text-danger mt-n1 mr-2"></i>Special Offers</span></a></h3>
+                    </div>
+                  </div>
+                  <!-- Oil & Olives-->
+                  <div class="card border-bottom">
+                    <div class="card-header">
+                      <h3 class="accordion-heading font-size-base px-grid-gutter"><a class="collapsed py-3" href="{% url 'shop:product_list_by_category' 'olive-and-oil' %}" role="button"  aria-expanded="false" aria-controls="bakery"><span class="d-flex align-items-center"><i class="czi-wine font-size-lg opacity-60 mt-n1 mr-2"></i>Oil & Olives</span></a></h3>
+                    </div>
+                  </div>
+                  <!-- Grains -->
+                  <div class="card border-bottom">
+                    <div class="card-header">
+                      <h3 class="accordion-heading font-size-base px-grid-gutter"><a class="collapsed py-3" href="{% url 'shop:product_list_by_category' 'grain-and-nuts' %}" role="button"  aria-expanded="false" aria-controls="fruits"><span class="d-flex align-items-center"><i class="czi-corn font-size-lg opacity-60 mt-n1 mr-2"></i>Grains & Nuts</span></a></h3>
+                    </div>
+                  </div>
+                  <!-- Dairy -->
+                  <div class="card border-bottom">
+                    <div class="card-header">
+                      <h3 class="accordion-heading font-size-base px-grid-gutter"><a class="collapsed py-3" href="{% url 'shop:product_list_by_category' 'dairy' %}" role="button"  aria-expanded="false" aria-controls="dairy"><span class="d-flex align-items-center"><i class="czi-cheese font-size-lg opacity-60 mt-n1 mr-2"></i>Dairy</span></a></h3>
+                    </div>
+                  </div>
+                  <!-- Canned Food-->
+                  <div class="card border-bottom">
+                    <div class="card-header">
+                      <h3 class="accordion-heading font-size-base px-grid-gutter"><a class="collapsed py-3" href="{% url 'shop:product_list_by_category' 'canned-food' %}" role="button"  aria-expanded="false" aria-controls="meat"><span class="d-flex align-items-center"><i class="czi-canned-food font-size-lg opacity-60 mt-n1 mr-2"></i>Canned Food</span></a></h3>
+                    </div>
+                  </div>
+                  <!-- Nuts-->
+                  <div class="card border-bottom">
+                    <div class="card-header">
+                      <h3 class="accordion-heading font-size-base px-grid-gutter"><a class="collapsed py-3" href="{% url 'shop:product_list_by_category' 'sauces-and-spices' %}" role="button"  aria-expanded="false" aria-controls="fish"><span class="d-flex align-items-center"><i class="czi-fish font-size-lg opacity-60 mr-2"></i>Sauces & Spices</span></a></h3>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <!-- Menu-->
+            <div class="sidebar-nav tab-pane fade" id="menu" role="tabpanel">
+              <div class="widget widget-categories">
+                <div class="accordion" id="shop-menu">
+                  <!-- Homepages-->
+                  <div class="card border-bottom">
+                    <div class="card-header">
+                      <h3 class="accordion-heading font-size-base px-grid-gutter"><a class="collapsed py-3" href="{% url 'shop:index' %}" role="button"  aria-expanded="false" aria-controls="home">Home</a></h3>
+                    </div>
+                  </div>
+                  <!-- Shop-->
+                  <div class="card border-bottom">
+                    <div class="card-header">
+                      <h3 class="accordion-heading font-size-base px-grid-gutter"><a class="collapsed py-3" href="{% url 'shop:product_list' %}" role="button" aria-expanded="false" aria-controls="shop">Shop</a></h3>
+                    </div>
+                  </div>
+                  <!-- Sales-->
+                  <div class="card border-bottom">
+                    <div class="card-header">
+                      <h3 class="accordion-heading font-size-base px-grid-gutter"><a class="collapsed py-3" href="#" role="button" aria-expanded="false" aria-controls="account">SALES</a></h3>
+                    </div>
+                  </div>
+                  <!-- Cart -->
+                  <div class="card border-bottom">
+                    <div class="card-header">
+                      <h3 class="accordion-heading font-size-base px-grid-gutter"><a class="collapsed py-3" href="{% url 'cart:cart_detail' %}" role="button" aria-expanded="false" aria-controls="pages">Cart</a></h3>
+                    </div>
+                  </div>
+                  <!-- About-->
+                  <div class="card border-bottom">
+                    <div class="card-header">
+                      <h3 class="accordion-heading font-size-base px-grid-gutter"><a class="collapsed py-3" href="{% url 'shop:about_us' %}" role="button"  aria-expanded="false" aria-controls="blog">About Us</a></h3>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="px-grid-gutter pt-5 pb-4 mb-2">
+          <div class="d-flex mb-3"><i class="czi-support h4 mb-0 font-weight-normal text-primary mt-1 mr-1"></i>
+            <div class="pl-2">
+              <div class="text-muted font-size-sm">Support</div><a class="nav-link-style font-size-md" href="tel:+100331697720">+48 (00) 33 169 7720</a>
+            </div>
+          </div>
+          <div class="d-flex mb-3"><i class="czi-mail h5 mb-0 font-weight-normal text-primary mt-1 mr-1"></i>
+            <div class="pl-2">
+              <div class="text-muted font-size-sm">Email</div><a class="nav-link-style font-size-md" href="mailto:customer@example.com">customer@example.com</a>
+            </div>
+          </div>
+          <h6 class="pt-2 pb-1">Follow us</h6><a class="social-btn sb-outline sb-facebook mr-2 mb-2" href="#"><i class="czi-facebook"></i></a><a class="social-btn sb-outline sb-instagram mr-2 mb-2" href="#"><i class="czi-instagram"></i></a>
+        </div>
+      </div>
+    </aside>
+    <!-- Page-->
+
+    <main class="sidebar-fixed-enabled" style="padding-top: 5rem;">
+        
+        {% block content %}
+
+        {% endblock content %}
+
+        <!-- Footer-->
+        <footer class="bg-dark pt-5">
+          <div class="px-lg-3 pt-2 pb-4">
+            <div class="mx-auto px-3" style="max-width: 80rem;">
+              <div class="row">
+                <div class="col-xl-2 col-lg-3 col-sm-4 pb-2 mb-4">
+                  <div class="mt-n1"><a class="d-inline-block align-middle" href="#"><img class="d-block mb-4" width="117" src="{% static 'img/logo-dark.png' %}" alt="Sklep Dubai"/></a></div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-sm-4">
+                  <div class="widget widget-links widget-light pb-2 mb-4">
+                    <h3 class="widget-title text-light">Product catalog</h3>
+                    <ul class="widget-list">
+                      <li class="widget-list-item"><a class="widget-list-link" href="{% url 'shop:product_list' %}">Special offers</a></li>
+                      <li class="widget-list-item"><a class="widget-list-link" href="{% url 'shop:product_list_by_category' 'olive-and-oil' %}">Oil & Olives</a></li>
+                      <li class="widget-list-item"><a class="widget-list-link" href="{% url 'shop:product_list_by_category' 'grain-and-nuts' %}">Grains & Nuts</a></li>
+                      <li class="widget-list-item"><a class="widget-list-link" href="{% url 'shop:product_list_by_category' 'dairy' %}">Dairy</a></li>
+                      <li class="widget-list-item"><a class="widget-list-link" href="{% url 'shop:product_list_by_category' 'canned-food' %}">Canned Food</a></li>
+                      <li class="widget-list-item"><a class="widget-list-link" href="{% url 'shop:product_list_by_category' 'sauces-and-spices' %}">Sauces & Spices</a></li>
+                      <li class="widget-list-item"><a class="widget-list-link" href="#">Tea & Coffee</a></li>
+                      <li class="widget-list-item"><a class="widget-list-link" href="#">Sweets</a></li>
+                      <li class="widget-list-item"><a class="widget-list-link" href="#">Soft Drinks & Juice</a></li>
+                      <li class="widget-list-item"><a class="widget-list-link" href="#">Packets, Cereals</a></li>
+                      <li class="widget-list-item"><a class="widget-list-link" href="#">Frozen</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-sm-4">
+                  <div class="widget widget-links widget-light pb-2 mb-4">
+                    <h3 class="widget-title text-light">Company</h3>
+                    <ul class="widget-list">
+                      <li class="widget-list-item"><a class="widget-list-link" href="#">About us</a></li>
+                      <li class="widget-list-item"><a class="widget-list-link" href="#">Store locator</a></li>
+                      <li class="widget-list-item"><a class="widget-list-link" href="#">Contacts</a></li>
+                    </ul>
+                  </div>
+                  <div class="widget widget-light pb-2 mb-4">
+                    <h3 class="widget-title text-light">Follow us</h3><a class="social-btn sb-light sb-facebook mr-2 mb-2" href="#"><i class="czi-facebook"></i></a><a class="social-btn sb-light sb-instagram mr-2 mb-2" href="#"><i class="czi-instagram"></i></a>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-sm-8">
+                  <div class="widget pb-2 mb-4">
+                    <h3 class="widget-title text-light pb-1">Stay informed</h3>
+                    <form class="cz-subscribe-form validate" action="https://studio.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;amp;id=29ca296126" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+                      <div class="input-group input-group-overlay flex-nowrap">
+                        <div class="input-group-prepend-overlay"><span class="input-group-text text-muted font-size-base"><i class="czi-mail"></i></span></div>
+                        <input class="form-control prepended-form-control" type="email" name="EMAIL" placeholder="Your email" required>
+                        <div class="input-group-append">
+                          <button class="btn btn-primary" type="submit" name="subscribe">Subscribe*</button>
+                        </div>
+                      </div>
+                      <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                      <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                        <input class="cz-subscribe-form-antispam" type="text" name="b_c7103e2c981361a6639545bd5_29ca296126" tabindex="-1">
+                      </div><small class="form-text text-light opacity-50">*Subscribe to our newsletter to receive early discount offers, updates and new products info.</small>
+                      <div class="subscribe-status"></div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-darker px-lg-3 py-3">
+            <div class="d-sm-flex justify-content-between align-items-center mx-auto px-3" style="max-width: 80rem;">
+              <div class="font-size-xs text-light opacity-50 text-center text-sm-left py-3">© All rights reserved. Made by <a class="text-light" href="https://createx.studio/" target="_blank" rel="noopener">AnC Media</a></div>
+              <div class="py-3"><img class="d-block mx-auto mx-sm-left" width="187" src="{% static 'img/cards-alt.png' %}" alt="Payment methods"/>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </main>
+
+
+    <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted font-size-sm mr-2">Top</span><i class="btn-scroll-top-icon czi-arrow-up">   </i></a>
+    <!-- Vendor scrits: js libraries and plugins-->
+    <script src="{% static 'vendor/jquery/dist/jquery.slim.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/bs-custom-file-input/dist/bs-custom-file-input.min.js' %}"></script>
+    <script src="{% static 'vendor/simplebar/dist/simplebar.min.js' %}"></script>
+    <script src="{% static 'vendor/tiny-slider/dist/min/tiny-slider.js' %}"></script>
+    <script src="{% static 'vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js' %}"></script>
+    <!-- Main theme script-->
+    <script src="{% static 'js/theme.min.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block content %}
+
+  <section class="px-lg-3 pt-4">
+    <div class="px-3 pt-2">
+      <!-- Page title + breadcrumb-->
+      <nav class="mb-4" aria-label="breadcrumb">
+        <ol class="breadcrumb flex-lg-nowrap">
+          <li class="breadcrumb-item"><a class="text-nowrap" href="{% url 'shop:index' %}"><i class="czi-home"></i>Home</a></li>
+          <li class="breadcrumb-item text-nowrap active" aria-current="page">Checkout</li>
+        </ol>
+      </nav>
+      <!-- Content-->
+      <!-- Checkout form-->
+      <form method="post" class="order-form">
+        <div class="row no-gutters pb-5 mb-xl-3">
+          <!-- Delivery details-->
+          <div class="col-xl-6 mb-3">
+            <h1 class="h2 mb-4">Checkout</h1>
+            <h2 class="h5 mb-4">Delivery details</h2>
+            
+            {{ form.as_p }}
+            <button class="btn btn-primary btn-block" type="submit" value="Place order"> Place Order </button>
+            {% csrf_token %}
+          </br></br>
+              <h2 class="h6 pb-2">Do you have a coupon code?</h2>
+              <div class="d-flex">
+                <input class="form-control mr-3" type="text" placeholder="Coupon code">
+                <button class="btn btn-outline-primary" type="button">Apply code</button>
+              </div>
+          </div>
+          <!-- Order summary + payment-->
+          <div class="col-xl-5 offset-xl-1 mb-3">
+            <div class="bg-light rounded-lg py-5 px-4 px-sm-5">
+              <h2 class="h5 pb-3">Your order</h2>
+              {% for item in cart %}
+                {% with product=item.product %}
+              <div class="media align-items-center pb-2 border-bottom"><a class="d-block mr-2" href="{% url 'shop:product_detail' product.id product.slug %}"><img width="64" src="{{product.image.url}}" alt="Product"/></a>
+                <div class="media-body">
+                  <h6 class="widget-product-title"><a href="{% url 'shop:product_detail' product.id product.slug %}">{{product.name}}</a></h6>
+                  <div class="widget-product-meta"><span class="text-accent mr-2">PLN {{product.price}}</span><span class="text-muted">x {{item.quantity}}</span></div>
+                </div>
+              </div>
+                {% endwith %}
+              {% endfor %}
+
+              <ul class="list-unstyled font-size-sm pt-4 pb-2 border-bottom">
+                <li class="d-flex justify-content-between align-items-center"><span class="mr-2">Subtotal:</span><span class="text-right font-weight-medium">PLN {{ cart.get_total_price }}</span></li>
+                <li class="d-flex justify-content-between align-items-center"><span class="mr-2">Delivery:</span><span class="text-right font-weight-medium">PLN 0.<small>00</small></span></li>
+              </ul>
+              <h3 class="font-weight-normal text-center my-4 py-2">PLN {{ cart.get_total_price }}</h3>
+
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+{% endblock %}

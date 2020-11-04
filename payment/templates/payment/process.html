@@ -1,0 +1,112 @@
+{% extends "shop/base.html" %}
+{% block title %}Pay by credit card{% endblock %}
+{% block content %}
+
+
+<section class="px-lg-3 pt-4">
+  <div class="px-3 pt-2">
+    <!-- Page title + breadcrumb-->
+    <nav class="mb-4" aria-label="breadcrumb">
+      <ol class="breadcrumb flex-lg-nowrap">
+        <li class="breadcrumb-item"><a class="text-nowrap" href="{% url 'shop:index' %}"><i class="czi-home"></i>Home</a></li>
+        <li class="breadcrumb-item text-nowrap active" aria-current="page">Checkout</li>
+      </ol>
+    </nav>
+    <!-- Content-->
+    <!-- Checkout form-->
+    
+      <div class="row no-gutters pb-5 mb-xl-3">
+        <!-- Delivery details-->
+        <div class="col-xl-6 mb-3">
+          <h1 class="h2 mb-4">Pay by credit card</h1>
+          <form id="payment" class="form-group" method="post">
+          <label for="card-number">Card Number</label>
+          <div id="card-number" class="field form-control"></div>
+          <label for="cvv">CVV</label>
+          <div id="cvv" class="field form-control"></div>
+          <label for="expiration-date">Expiration Date</label>
+          <div id="expiration-date" class="field form-control"></div>
+          <input type="hidden" id="nonce" name="payment_method_nonce" value="">
+          {% csrf_token %}</br>
+          <input class="btn btn-primary btn-block"  type="submit" value="Pay">
+          </form>
+
+          </br></br>
+            
+        </div>
+        <!-- Order summary + payment-->
+        <div class="col-xl-5 offset-xl-1 mb-3">
+          <div class="bg-light rounded-lg py-5 px-4 px-sm-5">
+            <h2 class="h5 pb-3">Your order</h2>
+            {% for item in cart %}
+              {% with product=item.product %}
+            <div class="media align-items-center pb-2 border-bottom"><a class="d-block mr-2" href="{% url 'shop:product_detail' product.id product.slug %}"><img width="64" src="{{product.image.url}}" alt="Product"/></a>
+              <div class="media-body">
+                <h6 class="widget-product-title"><a href="{% url 'shop:product_detail' product.id product.slug %}">{{product.name}}</a></h6>
+                <div class="widget-product-meta"><span class="text-accent mr-2">PLN {{product.price}}</span><span class="text-muted">x {{item.quantity}}</span></div>
+              </div>
+            </div>
+              {% endwith %}
+            {% endfor %}
+
+            <ul class="list-unstyled font-size-sm pt-4 pb-2 border-bottom">
+              <li class="d-flex justify-content-between align-items-center"><span class="mr-2">Subtotal:</span><span class="text-right font-weight-medium">PLN {{ cart.get_total_price }}</span></li>
+              <li class="d-flex justify-content-between align-items-center"><span class="mr-2">Delivery:</span><span class="text-right font-weight-medium">PLN 0.<small>00</small></span></li>
+            </ul>
+            <h3 class="font-weight-normal text-center my-4 py-2">PLN {{ cart.get_total_price }}</h3>
+
+          </div>
+        </div>
+      </div>
+    
+  </div>
+</section>
+
+  <!-- includes the Braintree JS client SDK -->
+  <script src="https://js.braintreegateway.com/web/3.44.2/js/client.min.js"></script>
+  <script src="https://js.braintreegateway.com/web/3.44.2/js/hosted-fields.min.js"></script>
+  <script>
+    var form = document.querySelector('#payment');
+    var submit = document.querySelector('input[type="submit"]');
+    braintree.client.create({
+      authorization: '{{ client_token }}'
+    }, function (clientErr, clientInstance) {
+      if (clientErr) {
+        console.error(clientErr);
+        return;
+      }
+      braintree.hostedFields.create({
+        client: clientInstance,
+        styles: {
+          'input': {'font-size': '13px'},
+          'input.invalid': {'color': 'red'},
+          'input.valid': {'color': 'green'}
+        },
+        fields: {
+          number: {selector: '#card-number'},
+          cvv: {selector: '#cvv'},
+          expirationDate: {selector: '#expiration-date'}
+        }
+      }, function (hostedFieldsErr, hostedFieldsInstance) {
+        if (hostedFieldsErr) {
+          console.error(hostedFieldsErr);
+          return;
+        }
+        submit.removeAttribute('disabled');
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+          hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+            if (tokenizeErr) {
+              console.error(tokenizeErr);
+              return;
+            }
+            // set nonce to send to the server
+            document.getElementById('nonce').value = payload.nonce;
+            // submit form
+            document.getElementById('payment').submit();
+          });
+        }, false);
+      });
+    });
+  </script>
+{% endblock %}

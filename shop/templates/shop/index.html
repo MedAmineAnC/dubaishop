@@ -1,0 +1,178 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}
+  Dubai Shop | Home Page
+{% endblock %}
+
+{% block cart %}
+<div class="navbar-tool dropdown ml-3"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="{% url 'cart:cart_detail' %}"><span class="navbar-tool-label">{{cart.get_total_items}}</span><i class="navbar-tool-icon czi-cart"></i></a><a class="navbar-tool-text" href="{% url 'cart:cart_detail' %}"><small>My Cart</small>PLN {{cart.get_total_price}}</a>
+  <div class="dropdown-menu dropdown-menu-right" style="width: 20rem;">
+    <div class="widget widget-cart px-3 pt-2 pb-3">
+      <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
+
+        {% for item in cart %}
+						{% with product=item.product %}
+        <div class="widget-cart-item pb-2 border-bottom">
+          <div class="media align-items-center"><a class="d-block mr-2" href="{% url 'shop:product_detail' product.id product.slug %}"><img width="64" src="{{product.image.url}}" alt="Product"/></a>
+            <div class="media-body">
+              <h6 class="widget-product-title"><a href="{% url 'shop:product_detail' product.id product.slug %}">{{product.name}}</a></h6>
+              <div class="widget-product-meta"><span class="text-accent mr-2">PLN {{product.sale_price}}</span><span class="text-muted">x {{item.quantity}}</span></div>
+            </div>
+          </div>
+        </div>
+            {% endwith %}
+        {% endfor %}
+      </div>
+      <div class="d-flex flex-wrap justify-content-between align-items-center pt-3">
+        <div class="font-size-sm mr-2 py-2"><span class="text-muted">Total:</span><span class="text-accent font-size-base ml-1">PLN {{cart.get_total_price}}</span></div><a class="btn btn-primary btn-sm" href="{% url 'orders:order_create' %}"><i class="czi-card mr-2 font-size-base align-middle"></i>Checkout<i class="czi-arrow-right ml-1 mr-n1"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+
+
+<!-- Main Caroussel -->
+
+<div class="cz-carousel cz-dots-enabled">
+  <div class="cz-carousel-inner data-carousel-options='{"autoplay": true, "autoplayTimeout": 5000}'">
+    {% for slide in slides %}
+    <img src="{{slide.image.url}}" alt="{{slide.name}}">
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Bestseller Caroussel -->
+
+      <br/><br/>
+      <h1 class="h3 pb-2 mb-grid-gutter text-center">Bestseller</h1>
+      <br/><br/>
+
+<div class="cz-carousel cz-controls-static cz-controls-outside">
+  <div class="cz-carousel-inner" data-carousel-options='{"items": 2, "controls": true, "nav": false, "autoHeight": true, "responsive": {"0":{"items":1},"500":{"items":2, "gutter": 18},"768":{"items":3, "gutter": 20}, "1100":{"items":4, "gutter": 30}}}'>
+    
+    {% for product in bestsellers %}
+    <!-- Item -->
+    <div>
+      <div class="card product-card card-static">
+        <a class="card-img-top d-block overflow-hidden" href="{% url 'shop:product_detail' product.id product.slug %}">
+          <img src="{{product.image.url}}" alt="Product">
+        </a>
+        <div class="card-body py-2">
+          <a class="product-meta d-block font-size-xs pb-1" href="#">{{product.category}}</a>
+          <h3 class="product-title font-size-sm"><a href="{% url 'shop:product_detail' product.id product.slug %}">{{product.name}}</a></h3>
+          <div class="d-flex justify-content-between">
+            <div class="product-price">
+              <span class="text-accent">PLN{{product.price|floatformat:2}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="product-floating-btn">
+          <a href="{% url 'cart:cart_button' product.id %}" method="post" class="btn btn-primary btn-shadow btn-sm update-cart" type="button">+<i class="czi-cart font-size-base ml-1"></i></a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    <!-- Add as many items as you need -->
+  </div>
+</div>
+
+
+<!-- Sale Caroussel -->
+<br/><br/>
+<h1 class="h3 pb-2 mb-grid-gutter text-center">Sale</h1>
+<br/><br/>
+
+<div class="cz-carousel cz-controls-static cz-controls-outside">
+  <div class="cz-carousel-inner" data-carousel-options='{"items": 2, "controls": true, "nav": false, "autoHeight": true, "responsive": {"0":{"items":1},"500":{"items":2, "gutter": 18},"768":{"items":3, "gutter": 20}, "1100":{"items":4, "gutter": 30}}}'>
+    
+    {% for product in sales %}
+    <!-- Item -->
+    <div>
+      <div class="card product-card card-static">
+        <span class="badge badge-danger badge-shadow">Sale</span>
+        <a class="card-img-top d-block overflow-hidden" href="{% url 'shop:product_detail' product.id product.slug %}">
+          <img src="{{product.image.url}}" alt="Product">
+        </a>
+        <div class="card-body py-2">
+          <a class="product-meta d-block font-size-xs pb-1" href="#">{{product.category}}</a>
+          <h3 class="product-title font-size-sm"><a href="{% url 'shop:product_detail' product.id product.slug %}">{{product.name}}</a></h3>
+          <div class="d-flex justify-content-between">
+            <div class="product-price">
+              <span class="text-accent">PLN{{product.sale_price|floatformat:2}}</span>
+              <del class="font-size-sm text-muted">PLN{{product.price}}</del>
+            </div>
+          </div>
+        </div>
+        <div class="product-floating-btn">
+          <a href="{% url 'cart:cart_button' product.id %}" method="post" class="btn btn-primary btn-shadow btn-sm update-cart" type="button">+<i class="czi-cart font-size-base ml-1"></i></a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    <!-- Add as many items as you need -->
+  </div>
+</div>
+
+
+<br/><br/>
+<h1 class="h3 pb-2 mb-grid-gutter text-center">Where To Find Us?</h1>
+<br/><br/>
+
+
+    <!-- Split section: Map + Contact form-->
+    <div class="container-fluid px-0" id="map">
+      <div class="row no-gutters">
+        <div class="col-lg-6 iframe-full-height-wrap">
+          <iframe class="iframe-full-height" width="600" height="250" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d53357.14257194912!2d-73.07268695801845!3d40.78017062807504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e8483b8bffed93%3A0x53467ceb834b7397!2s396+Lillian+Blvd%2C+Holbrook%2C+NY+11741%2C+USA!5e0!3m2!1sen!2sua!4v1558703206875!5m2!1sen!2sua"></iframe>
+        </div>
+        <div class="col-lg-6 px-4 px-xl-5 py-5 border-top">
+          <h2 class="h4 mb-4">Drop us a line</h2>
+          <form class="needs-validation mb-3" novalidate>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="cf-name">Your name:&nbsp;<span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" id="cf-name" placeholder="John Doe" required>
+                  <div class="invalid-feedback">Please fill in you name!</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="cf-email">Email address:&nbsp;<span class="text-danger">*</span></label>
+                  <input class="form-control" type="email" id="cf-email" placeholder="johndoe@email.com" required>
+                  <div class="invalid-feedback">Please provide valid email address!</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="cf-phone">Your phone:&nbsp;<span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" id="cf-phone" placeholder="+1 (212) 00 000 000" required>
+                  <div class="invalid-feedback">Please provide valid phone number!</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="cf-subject">Subject:</label>
+                  <input class="form-control" type="text" id="cf-subject" placeholder="Provide short title of your request">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cf-message">Message:&nbsp;<span class="text-danger">*</span></label>
+              <textarea class="form-control" id="cf-message" rows="6" placeholder="Please describe in detail your request" required></textarea>
+              <div class="invalid-feedback">Please write a message!</div>
+            </div>
+            <button class="btn btn-primary" type="submit">Send message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}

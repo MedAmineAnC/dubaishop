@@ -1,0 +1,12 @@
+{% extends "shop/base.html" %}
+{% block title %}Payment successful{% endblock %}
+{% block content %}
+<nav class="mb-4" aria-label="breadcrumb">
+  <ol class="breadcrumb flex-lg-nowrap">
+    <li class="breadcrumb-item"><a class="text-nowrap" href="{% url 'shop:index' %}"><i class="czi-home"></i>Home</a></li>
+    <li class="breadcrumb-item text-nowrap active" aria-current="page">Checkout</li>
+  </ol>
+</nav>
+  <h1>Your payment was successful</h1>
+  <p>Your payment has been processed successfully.</p>
+{% endblock %}

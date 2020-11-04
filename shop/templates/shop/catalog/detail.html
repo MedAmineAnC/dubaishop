@@ -1,0 +1,114 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}
+  Dubai Shop | Details
+{% endblock %}
+
+{% block cart %}
+<div class="navbar-tool dropdown ml-3"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="{% url 'cart:cart_detail' %}"><span class="navbar-tool-label">{{cart.get_total_items}}</span><i class="navbar-tool-icon czi-cart"></i></a><a class="navbar-tool-text" href="{% url 'cart:cart_detail' %}"><small>My Cart</small>PLN {{cart.get_total_price}}</a>
+  <div class="dropdown-menu dropdown-menu-right" style="width: 20rem;">
+    <div class="widget widget-cart px-3 pt-2 pb-3">
+      <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
+
+        {% for item in cart %}
+						{% with product=item.product %}
+        <div class="widget-cart-item pb-2 border-bottom">
+          <div class="media align-items-center"><a class="d-block mr-2" href="{% url 'shop:product_detail' product.id product.slug %}"><img width="64" src="{{product.image.url}}" alt="Product"/></a>
+            <div class="media-body">
+              <h6 class="widget-product-title"><a href="{% url 'shop:product_detail' product.id product.slug %}">{{product.name}}</a></h6>
+              <div class="widget-product-meta"><span class="text-accent mr-2">PLN {{product.sale_price}}</span><span class="text-muted">x {{item.quantity}}</span></div>
+            </div>
+          </div>
+        </div>
+            {% endwith %}
+        {% endfor %}
+      </div>
+      <div class="d-flex flex-wrap justify-content-between align-items-center pt-3">
+        <div class="font-size-sm mr-2 py-2"><span class="text-muted">Total:</span><span class="text-accent font-size-base ml-1">PLN {{cart.get_total_price}}</span></div><a class="btn btn-primary btn-sm" href="{% url 'orders:order_create' %}"><i class="czi-card mr-2 font-size-base align-middle"></i>Checkout<i class="czi-arrow-right ml-1 mr-n1"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<section class="px-lg-3 pt-4">
+    <div class="px-3 pt-2">
+      <!-- Page title + breadcrumb-->
+      <nav class="mb-4" aria-label="breadcrumb">
+        <ol class="breadcrumb flex-lg-nowrap">
+          <li class="breadcrumb-item"><a class="text-nowrap" href="{% url 'shop:index' %}"><i class="czi-home"></i>Home</a></li>
+          <li class="breadcrumb-item text-nowrap"><a href="{% url 'shop:product_list' %}">Product catalog</a>
+          </li>
+          <li class="breadcrumb-item text-nowrap active" aria-current="page">{{product.name}}</li>
+        </ol>
+      </nav>
+      <!-- Content-->
+      <!-- Product Gallery + description-->
+      <section class="row no-gutters mx-n2 pb-5 mb-xl-3">
+        <div class="col-xl-7 px-2 mb-3">
+          <div class="h-100 bg-light rounded-lg p-4">
+            <div class="cz-product-gallery">
+              <div class="cz-preview order-sm-2">
+                <div class="cz-preview-item active" id="first"><img src="{{product.image.url}}" alt="Product image"></div>
+              </div>
+              <div class="cz-thumblist order-sm-1"><a class="cz-thumblist-item active" href="#first"><img src="{{product.image.url}}" alt="Product thumb"></a></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-5 px-2 mb-3">
+          <div class="h-100 bg-light rounded-lg py-5 px-4 px-sm-5"><a class="product-meta d-block font-size-sm pb-2" href="#">{{product.category}}</a>
+            <h1 class="h2">{{product.name}}</h1>
+            <div class="h2 font-weight-normal text-accent">PLN {{product.price}}</div>
+            <div class="form-group d-flex flex-wrap align-items-center pt-4 pb-2">
+              <select class="custom-select mr-3 mb-3" style="width: 5rem;">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+              <a href="{% url 'cart:cart_button' product.id %}" method="post" class="btn btn-primary btn-shadow update-cart mr-3 mb-3" type="submit"><i class="czi-cart font-size-lg mr-2"></i>Add to Cart</a>
+              
+            </div>
+            <h6>Product description</h6>
+            <ul class="list-unstyled font-size-sm pt-2 mb-0">
+              <li><i class="czi-check-circle text-success mr-2"></i>Natural ingredients</li>
+              <li><i class="czi-check-circle text-success mr-2"></i>No dyes and flavor enhancers</li>
+              <li><i class="czi-check-circle text-success mr-2"></i>Gluten free</li>
+              <li><i class="czi-check-circle text-success mr-2"></i>Vitamins B2, B3, B5 and B6</li>
+              <li><i class="czi-check-circle text-success mr-2"></i>Tastes better with milk</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <!-- Related products-->
+      <section class="pb-5 mb-2 mb-xl-4">
+        <h2 class="h3 pb-2 mb-grid-gutter text-center">You may also like</h2>
+        <div class="cz-carousel cz-controls-static cz-controls-outside cz-dots-enabled">
+          <div class="cz-carousel-inner" data-carousel-options="{&quot;items&quot;: 2, &quot;gutter&quot;: 16, &quot;controls&quot;: true, &quot;autoHeight&quot;: true, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1}, &quot;480&quot;:{&quot;items&quot;:2}, &quot;720&quot;:{&quot;items&quot;:3}, &quot;991&quot;:{&quot;items&quot;:2}, &quot;1140&quot;:{&quot;items&quot;:3}, &quot;1300&quot;:{&quot;items&quot;:4}, &quot;1500&quot;:{&quot;items&quot;:5}}}">
+            <!-- Product-->
+            {% for product in prods %}
+            <div>
+              <div class="card product-card card-static pb-3">
+                <a class="card-img-top d-block overflow-hidden" href="{% url 'shop:product_detail' product.id product.slug %}"><img src="{{product.image.url}}" alt="Product"></a>
+                <div class="card-body py-2"><a class="product-meta d-block font-size-xs pb-1" href="#">{{product.category}}</a>
+                  <h3 class="product-title font-size-sm"><a href="{% url 'shop:product_detail' product.id product.slug %}">{{product.name}}</a></h3>
+                  <div class="product-price"><span class="text-accent">PLN {{product.sale_price}}</span></div>
+                </div>
+                <div class="product-floating-btn">
+                  <a href="{% url 'cart:cart_button' product.id %}" method="post" class="btn btn-primary btn-shadow btn-sm" type="button" data-toggle="toast" data-target="#cart-toast">+<i class="czi-cart font-size-base ml-1"></i></a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+{% endblock content %}  
